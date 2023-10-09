@@ -28,11 +28,18 @@ namespace Proyecto1.Controllers
         // POST: EmpleadoControllet/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Empleado empleado)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if(ModelState.IsValid)
+                {
+                    Cache.AddEmpleado(empleado);
+                    return RedirectToAction(nameof(Index));
+                }
+                else { 
+                    return View(); 
+                }
             }
             catch
             {
