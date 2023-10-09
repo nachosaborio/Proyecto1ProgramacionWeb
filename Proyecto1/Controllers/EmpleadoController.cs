@@ -50,17 +50,23 @@ namespace Proyecto1.Controllers
         // GET: EmpleadoControllet/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Empleado empleado = Cache.GetEmpleadoXId(id);
+            return View(empleado);
         }
 
         // POST: EmpleadoControllet/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Empleado empleado)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    Cache.UpdateEmpleado(empleado);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {
