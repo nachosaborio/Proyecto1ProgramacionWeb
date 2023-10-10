@@ -74,22 +74,17 @@ namespace Proyecto1.Controllers
         // GET: ParqueoController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Parqueo parqueo = Cache.GetParqueoXId(id);
+            return View(parqueo); ;
         }
 
         // POST: ParqueoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Parqueo parqueo)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Cache.DeleteParqueo(parqueo.Id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
