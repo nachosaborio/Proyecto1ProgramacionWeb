@@ -77,22 +77,17 @@ namespace Proyecto1.Controllers
         // GET: EmpleadoControllet/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Empleado empleado = Cache.GetEmpleadoXId(id);
+            return View(empleado); ;
         }
 
         // POST: EmpleadoControllet/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Empleado empleado)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Cache.DeleteEmpleado(empleado.Id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
