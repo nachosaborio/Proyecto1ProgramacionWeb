@@ -1,11 +1,26 @@
-﻿namespace Proyecto1.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Proyecto1.Models
 {
     public class Parqueo
     {
-        public string? Nombre { get; set; }
-        public int CapacidadMaxima { get; set; }
-        public DateTime HoraApertura { get; set; }
-        public DateTime HoraCierrre { get; set; }
 
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "El nombre del parqueo es requerido")]
+        [Display(Name = "Nombre del parqueo")]
+        public string? Nombre { get; set; }
+
+        [Required(ErrorMessage = "La capacidad máxima es requerida")]
+        [Display(Name = "Capacidad máxima")]
+        public int CapacidadMaxima { get; set; }
+
+        [Required(ErrorMessage = "La hora de apertura es requerida")]
+        [Display(Name = "Hora de apertura")]
+        public DateTime HoraApertura { get; set; }
+
+        [Required(ErrorMessage = "La jora de cierre es requerida")]
+        [Display(Name = "Hora de cierre")]
+        public DateTime HoraCierrre { get; set; }
     }
 }

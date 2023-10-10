@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Proyecto1.Models;
 
 namespace Proyecto1.Controllers
 {
@@ -8,7 +9,8 @@ namespace Proyecto1.Controllers
         // GET: ParqueoController
         public ActionResult Index()
         {
-            return View();
+            List<Parqueo> parqueos = Cache.GetAllParqueos();
+            return View(parqueos);
         }
 
         // GET: ParqueoController/Details/5
@@ -26,10 +28,20 @@ namespace Proyecto1.Controllers
         // POST: ParqueoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Parqueo parqueo)
         {
             try
             {
+                List<Parqueo> parqueos = Cache.GetAllParqueos();
+                if (parqueos.Count == 0)
+                {
+                    parqueo.Id = 1;
+                }
+                else
+                {
+                    parqueo.Id = parqueos.Last().Id + 1;
+                }
+                Cache.AddParqueo(parqueo);
                 return RedirectToAction(nameof(Index));
             }
             catch

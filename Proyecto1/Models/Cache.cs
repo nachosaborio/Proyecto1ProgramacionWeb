@@ -34,5 +34,32 @@
         }
         #endregion
 
+        #region Parqueo
+        public static void AddParqueo(Parqueo parqueo)
+        {
+            parqueos.Add(parqueo);
+        }
+
+        public static List<Parqueo> GetAllParqueos()
+        {
+            return parqueos;
+        }
+
+        public static Parqueo GetParqueoXId(int ID)
+        {
+            return parqueos.Find(x => x.Id == ID);
+        }
+
+        public static void UpdateParqueo(Parqueo parqueo)
+        {
+            parqueos.Remove(parqueos.Find(x => x.Id == parqueo.Id));
+            parqueos.Add(parqueo);
+        }
+
+        public static void DeleteParqueo(int ID)
+        {
+            parqueos.Remove(parqueos.Find(x => x.Id == ID));
+        }
+        #endregion
     }
 }
