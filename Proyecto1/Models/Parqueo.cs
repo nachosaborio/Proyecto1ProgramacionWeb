@@ -19,7 +19,7 @@ namespace Proyecto1.Models
         [Display(Name = "Hora de apertura")]
         public DateTime HoraApertura { get; set; }
 
-        [Required(ErrorMessage = "La jora de cierre es requerida")]
+        [Required(ErrorMessage = "La hora de cierre es requerida")]
         [Display(Name = "Hora de cierre")]
         public DateTime HoraCierrre { get; set; }
     }

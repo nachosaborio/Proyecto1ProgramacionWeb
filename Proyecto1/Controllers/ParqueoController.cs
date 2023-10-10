@@ -13,12 +13,6 @@ namespace Proyecto1.Controllers
             return View(parqueos);
         }
 
-        // GET: ParqueoController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: ParqueoController/Create
         public ActionResult Create()
         {
@@ -53,17 +47,23 @@ namespace Proyecto1.Controllers
         // GET: ParqueoController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Parqueo parqueo = Cache.GetParqueoXId(id);
+            return View(parqueo);
         }
 
         // POST: ParqueoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Parqueo parqueo)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    Cache.UpdateParqueo(parqueo);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {
