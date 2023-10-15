@@ -61,5 +61,33 @@
             parqueos.Remove(parqueos.Find(x => x.Id == ID));
         }
         #endregion
+
+        #region Tiquetes
+        public static void AddTiquete(Tiquete tiquete)
+        {
+            tiquetes.Add(tiquete);
+        }
+
+        public static List<Tiquete> GetAllTiquetes()
+        {
+            return tiquetes;
+        }
+
+        public static Tiquete GetTiqueteXId(int ID)
+        {
+            return tiquetes.Find(x => x.Id == ID);
+        }
+
+        public static void UpdateTiquete(Tiquete tiquete)
+        {
+            tiquetes.Remove(tiquetes.Find(x => x.Id == tiquete.Id));
+            tiquetes.Add(tiquete);
+        }
+
+        public static void DeleteTiquete(int ID)
+        {
+            tiquetes.Remove(tiquetes.Find(x => x.Id == ID));
+        }
+        #endregion
     }
 }

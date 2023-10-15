@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Proyecto1.Models;
 
 namespace Proyecto1.Controllers
 {
@@ -8,13 +9,8 @@ namespace Proyecto1.Controllers
         // GET: TiqueteController
         public ActionResult Index()
         {
-            return View();
-        }
-
-        // GET: TiqueteController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+            List<Tiquete> tiquetes = Cache.GetAllTiquetes();
+            return View(tiquetes);
         }
 
         // GET: TiqueteController/Create
@@ -26,10 +22,20 @@ namespace Proyecto1.Controllers
         // POST: TiqueteController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Tiquete tiquete)
         {
             try
             {
+                List<Tiquete> tiquetes = Cache.GetAllTiquetes();
+                if (tiquetes.Count == 0)
+                {
+                    tiquete.Id = 1;
+                }
+                else
+                {
+                    tiquete.Id = tiquetes.Last().Id + 1;
+                }
+                Cache.AddTiquete(tiquete);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -41,17 +47,23 @@ namespace Proyecto1.Controllers
         // GET: TiqueteController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Tiquete tiquete = Cache.GetTiqueteXId(id);
+            return View(tiquete);
         }
 
         // POST: TiqueteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Tiquete tiquete)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    Cache.UpdateTiquete(tiquete);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {
@@ -62,22 +74,17 @@ namespace Proyecto1.Controllers
         // GET: TiqueteController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Tiquete tiquete = Cache.GetTiqueteXId(id);
+            return View(tiquete);
         }
 
         // POST: TiqueteController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Tiquete tiquete)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Cache.DeleteTiquete(tiquete.Id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

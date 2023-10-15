@@ -5,11 +5,12 @@ namespace Proyecto1.Models
     public class Empleado
     {
         [Required(ErrorMessage = "El número de empleado es requerido")]
-        [Display(Name ="Número de empleado")]
+        [Display(Name = "Número de empleado")]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "La fecha de ingreso es requerida")]
         [Display(Name = "Fecha de ingreso")]
+        [DataType(DataType.Date)]
         public DateTime FechaIngreso { get; set; }
 
         [Required(ErrorMessage = "El nombre es requerido")]
@@ -22,6 +23,7 @@ namespace Proyecto1.Models
 
         [Required(ErrorMessage = "La fecha de nacimiento es requerida")]
         [Display(Name = "Fecha de nacimiento")]
+        [DataType(DataType.Date)]
         public DateTime FechaDeNacimiento { get; set; }
 
         [Required(ErrorMessage = "La cédula es requerida")]
